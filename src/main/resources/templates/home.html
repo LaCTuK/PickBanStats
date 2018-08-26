@@ -1,0 +1,101 @@
+<html>
+<head>
+    <link href = "/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <title>Main page</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <!-- Brand/logo -->
+    <div class="container">
+    <div >
+        <a class="navbar-brand float-left" href="/">
+            <img src="/img/robo_small.jpg" alt="logo" style="width:40px;">
+        </a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+            </li>
+<!--            <li class="nav-item">
+                <a class="nav-link" href="/soon">API</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/feedback">Feedback</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/donations">Donations</a>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <h1 class="h1">Pick/ban statistics main page</h1>
+    <p>Select teams: </p>
+    <div class="container pb-2">
+        <select class="custom-select float-left m-2" style="width: 120px" id="team1_selector">
+            <option value=""> Team 1 </option>
+            <option th:each="team:${teams}"
+                    th:value="${team.id}"
+                    th:utext="${team.name}"/>
+        </select>
+
+        <select class="custom-select float-left m-2" style="width: 120px"  id = "team2_selector">
+            <option value=""> Team 2 </option>
+            <option th:each="team:${teams}"
+                    th:value="${team.id}"
+                    th:utext="${team.name}"/>
+        </select>
+
+        <button type="button" onclick="getTeamsFromSelector()" class="btn btn-dark m-2" name="upd">Select</button>
+    </div>
+    <div id="interestingDiv" th:if="${!interesting.isEmpty()}">
+        <h3 class="pb-2">You may be interested in</h3>
+        <p th:each="row:${interesting}" class="pb-0">
+
+            <a href="../home.html" th:href="@{'/bans/' + ${row.team1} + '/' + ${row.team2}}"> <span th:text="${row.name}">...</span> </a>
+
+        </p>
+    </div>
+    <h3 class="pb-2">Last updated </h3>
+    <table class="table table-striped table-bordered table-sm">
+        <thead class="thead-dark">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Team
+            </th>
+            <th>
+                UPD
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="team:${updates}">
+            <td th:utext="${team.id}">...</td>
+            <td th:utext="${team.name}">...</td>
+            <td th:utext="${team.date}">...</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    <div class="container bg-light">
+        <span class="text-muted">2018 © lactuk.gq</span>
+    </div>
+</footer>
+
+</body>
+</html>

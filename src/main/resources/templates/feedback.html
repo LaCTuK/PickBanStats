@@ -1,0 +1,92 @@
+<html>
+<head>
+    <link href = "/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <title>Feedback</title>
+    <script>
+        $(function() {
+            $('#sendbtn').click(function(e) {
+                var url = "https://discordapp.com/api/webhooks/438000558364950539/qTKVHZLVSuqWzvTS53_rJaO-3U8ZeaD0wsrE7RtAvkA4zCAHZzuVOZ1rMPWmnHwpPWSg";
+                var content = $("#content").val();
+                var username = $("#username").val();;
+                var avatar_url = null;
+                $.post(url,
+                    {"content": content, "username": username, "avatar_url": avatar_url},
+                    function(){
+                        console.log("done!");
+                        $("#postresult").text("Message sent. Thank you!");
+                        $("#sendbtn").addClass("disabled");
+
+                        $("#content").addClass("disabled");
+
+                        $("#username").addClass("disabled");
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <!-- Brand/logo -->
+    <div class="container">
+        <div>
+        <a class="navbar-brand float-left" href="/">
+            <img src="/img/robo_small.jpg" alt="logo" style="width:40px;">
+        </a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+<!--            <li class="nav-item">
+                <a class="nav-link" href="/soon">API</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Feedback</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/donations">Donations</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+<div class="container p-1">
+    <div>
+        <h1>Feedback</h1>
+    </div>
+    <div class="p-2 m-2">
+        <div class="input-field">
+            <label for="username">Your name
+                <span class="badge badge-pill badge-secondary">Optional</span>
+            </label>
+            <input id="username" type="text" class="form-control">
+        </div>
+        <div class="input-field">
+            <label for="content">Text</label>
+            <textarea class="form-control" rows="5" id="content"></textarea>
+        </div>
+    </div>
+    <a class="btn btn-large btn-dark" href="#" id = "sendbtn">Send</a>
+    <div id="postresult">
+    </div>
+</div>
+
+<div class="container pt-3">
+    <h2>Disclaimer</h2>
+    <p>
+        Feel free to send me messages with your feedback. <br>
+        You can ask to update some teams or add some games to "interesting" section. <br>
+        I also would like your suggestions and constructive criticism. <br>
+
+    </p>
+    <p class="text-danger">        ❤️❤️❤️</p>
+</div>
+
+</body>
+</html>

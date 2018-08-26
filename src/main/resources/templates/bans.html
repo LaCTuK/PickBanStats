@@ -1,0 +1,247 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link href = "/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/chart.js/2.7.2/dist/Chart.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var bansvar = [[${bans}]];
+        var picksvar = [[${picks}]];
+        /*]]>*/
+    </script>
+    <title>Bans n picks tables</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <!-- Brand/logo -->
+    <div class="container">
+        <div>
+        <a class="navbar-brand float-left" href="/">
+            <img src="/img/robo_small.jpg" alt="logo" style="width:40px;">
+        </a>
+
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+<!--            <li class="nav-item">
+                <a class="nav-link" href="/soon">API</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/feedback">Feedback</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/donations">Donations</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+<!--    <form action="#" th:action="@{/}">
+        <input type="submit" class="btn btn-dark m-3" value="Home" />
+&lt;!&ndash;
+        <button onclick="queryStats()">HLTV stats (beta)</button>
+&ndash;&gt;
+    </form>
+&lt;!&ndash;    <form action="queryStats()">
+        <input type="submit" class="btn btn-dark m-3" value="Get stats (beta)" />
+    </form>&ndash;&gt;-->
+    <H1> Pick/ban statistics (last 3 months)  </H1>
+    <h2 class="H2">Picks </h2>
+    <table class="table table-sm table-bordered" id="picks">
+        <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+<!--            <th>
+                Cobble
+            </th>-->
+            <th>
+                Train
+            </th>
+            <th>
+                Nuke
+            </th>
+            <th>
+                Mirage
+            </th>
+            <th>
+                Inferno
+            </th>
+            <th>
+                Cache
+            </th>
+            <th>
+                Overpass
+            </th>
+            <th>
+                Dust 2
+            </th>
+        </tr>
+        <tr th:each="pick:${picks}">
+            <td th:utext="${pick.name}">...</td>
+<!--
+            <td th:utext="${pick.cbl}">...</td>
+-->
+            <td th:utext="${pick.trn}">...</td>
+            <td th:utext="${pick.nuke}">...</td>
+            <td th:utext="${pick.mrg}">...</td>
+            <td th:utext="${pick.inf}">...</td>
+            <td th:utext="${pick.cch}">...</td>
+            <td th:utext="${pick.ovp}">...</td>
+            <td th:utext="${pick.d2}">...</td>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="container">
+    <h2 class="H2">Bans </h2>
+    <table class="table table-sm table-bordered" id="bans">
+        <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+<!--            <th>
+                Cobble
+            </th>-->
+            <th>
+                Train
+            </th>
+            <th>
+                Nuke
+            </th>
+            <th>
+                Mirage
+            </th>
+            <th>
+                Inferno
+            </th>
+            <th>
+                Cache
+            </th>
+            <th>
+                Overpass
+            </th>
+            <th>
+                Dust 2
+            </th>
+
+        </tr>
+        <tr th:each="ban:${bans}">
+            <td th:utext="${ban.name}">...</td>
+<!--
+            <td th:utext="${ban.cbl}">...</td>
+-->
+            <td th:utext="${ban.trn}">...</td>
+            <td th:utext="${ban.nuke}">...</td>
+            <td th:utext="${ban.mrg}">...</td>
+            <td th:utext="${ban.inf}">...</td>
+            <td th:utext="${ban.cch}">...</td>
+            <td th:utext="${ban.ovp}">...</td>
+            <td th:utext="${ban.d2}">...</td>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<div class="container">
+    <h2 class="H2">Left </h2>
+    <table class="table table-sm table-bordered" id="left">
+        <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+<!--            <th>
+                Cobble
+            </th>-->
+            <th>
+                Train
+            </th>
+            <th>
+                Nuke
+            </th>
+            <th>
+                Mirage
+            </th>
+            <th>
+                Inferno
+            </th>
+            <th>
+                Cache
+            </th>
+            <th>
+                Overpass
+            </th>
+            <th>
+                Dust 2
+            </th>
+        </tr>
+        <tr th:each="left:${lefts}">
+            <td th:utext="${left.name}">...</td>
+<!--
+            <td th:utext="${left.cbl}">...</td>
+-->
+            <td th:utext="${left.trn}">...</td>
+            <td th:utext="${left.nuke}">...</td>
+            <td th:utext="${left.mrg}">...</td>
+            <td th:utext="${left.inf}">...</td>
+            <td th:utext="${left.cch}">...</td>
+            <td th:utext="${left.ovp}">...</td>
+            <td th:utext="${left.d2}">...</td>
+        </tr>
+        </thead>
+    </table>
+
+    <h2 class="H2">Last update </h2>
+    <table class="table table-sm table-bordered" id="upd">
+        <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+            <th>
+                Updated
+            </th>
+
+        </tr>
+        <tr th:each="updates:${bans}">
+            <td th:utext="${updates.name}">...</td>
+            <td th:utext="${#dates.format(updates.upd, 'dd-MM-yyyy')}">...</td>
+        </tr>
+        </thead>
+    </table>
+
+
+    <div class="row" >
+        <div style="height: 500px; width: 750px" >
+            <canvas id="picksChart"></canvas>
+        </div>
+        <div style=" height: 500px; width:750px; float: left">
+            <canvas id="bansChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container bg-light">
+        <span class="text-muted">2018 © lactuk.gq</span>
+    </div>
+</footer>
+
+</body>
+</html>
