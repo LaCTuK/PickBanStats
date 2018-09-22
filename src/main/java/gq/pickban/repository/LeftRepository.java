@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface LeftRepository extends CrudRepository<Left, Long> {
-    //List<Bans> findAll(List<Long> ids);
     List<Left> findAll();
     Left findById(long id);
 }

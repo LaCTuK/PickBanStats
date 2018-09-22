@@ -1,17 +1,12 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link href = "/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
-    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-    <script src="/webjars/chart.js/2.7.2/dist/Chart.js"></script>
-    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        var bansvar = [[${bans}]];
-        var picksvar = [[${picks}]];
-        /*]]>*/
-    </script>
+<!--    <link href = "/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>-->
+
+
     <title>Bans n picks tables</title>
 </head>
 <body>
@@ -57,10 +52,10 @@
         <input type="submit" class="btn btn-dark m-3" value="Get stats (beta)" />
     </form>&ndash;&gt;-->
     <H1> Pick/ban statistics (last 3 months)  </H1>
-    <h2 class="H2">Picks </h2>
     <table class="table table-sm table-bordered" id="picks">
         <thead>
         <tr>
+            <th rowspan="3" style="vertical-align : middle;text-align:center;">PICKS</th>
             <th>
                 Team
             </th>
@@ -107,10 +102,10 @@
 </div>
 
 <div class="container">
-    <h2 class="H2">Bans </h2>
     <table class="table table-sm table-bordered" id="bans">
         <thead>
         <tr>
+            <th rowspan="3" style="vertical-align : middle;text-align:center;">BANS</th>
             <th>
                 Team
             </th>
@@ -159,16 +154,17 @@
 
 
 <div class="container">
-    <h2 class="H2">Left </h2>
     <table class="table table-sm table-bordered" id="left">
         <thead>
         <tr>
+            <th rowspan="3" style="vertical-align : middle;text-align:center;">LEFT_</th>
+
             <th>
                 Team
             </th>
-<!--            <th>
-                Cobble
-            </th>-->
+            <!--            <th>
+                            Cobble
+                        </th>-->
             <th>
                 Train
             </th>
@@ -193,9 +189,9 @@
         </tr>
         <tr th:each="left:${lefts}">
             <td th:utext="${left.name}">...</td>
-<!--
-            <td th:utext="${left.cbl}">...</td>
--->
+            <!--
+                        <td th:utext="${left.cbl}">...</td>
+            -->
             <td th:utext="${left.trn}">...</td>
             <td th:utext="${left.nuke}">...</td>
             <td th:utext="${left.mrg}">...</td>
@@ -206,25 +202,379 @@
         </tr>
         </thead>
     </table>
+</div>
 
-    <h2 class="H2">Last update </h2>
-    <table class="table table-sm table-bordered" id="upd">
-        <thead>
-        <tr>
-            <th>
-                Team
-            </th>
-            <th>
-                Updated
-            </th>
 
-        </tr>
-        <tr th:each="updates:${bans}">
-            <td th:utext="${updates.name}">...</td>
-            <td th:utext="${#dates.format(updates.upd, 'dd-MM-yyyy')}">...</td>
-        </tr>
-        </thead>
-    </table>
+<div class="container">
+    <table class="table table-sm table-bordered" id="winrates">
+            <thead>
+            <tr>
+                <th rowspan="3" ><p>wins%</p><p>MAPS_</p></th>
+
+                <th>
+                    Team
+                </th>
+                <!--            <th>
+                                Cobble
+                            </th>-->
+                <th>
+                    Train
+                </th>
+                <th>
+                    Nuke
+                </th>
+                <th>
+                    Mirage
+                </th>
+                <th>
+                    Inferno
+                </th>
+                <th>
+                    Cache
+                </th>
+                <th>
+                    Overpass
+                </th>
+                <th>
+                    Dust 2
+                </th>
+            </tr>
+            <tr th:each="winrate, iter :${winrates}">
+                <td th:utext="${lefts[iter.index].name}">...</td>
+                <!--
+                            <td th:utext="${left.cbl}">...</td>
+                -->
+                <td th:utext="${winrate.trainWinrate} + '%' + ' (' +  ${#lists.size(train[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.nukeWinrate} + '%'  + ' (' +  ${#lists.size(nuke[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.mirageWinrate} + '%'  + ' (' +  ${#lists.size(mirage[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.infernoWinrate} + '%'  + ' (' +  ${#lists.size(inferno[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.cacheWinrate} + '%'  + ' (' +  ${#lists.size(cache[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.overpassWinrate} + '%'  + ' (' +  ${#lists.size(overpass[iter.index])} + ') '">...</td>
+                <td th:utext="${winrate.dust2Winrate} + '%'  + ' (' +  ${#lists.size(dust2[iter.index])} + ') '">...</td>
+            </tr>
+            </thead>
+        </table>
+</div>
+
+<hr>
+
+<div class="container">
+
+    <div id="histories">
+        <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-train-tab" data-toggle="pill" href="#pills-train" role="tab" aria-controls="pills-train" aria-selected="true">Train</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-nuke-tab" data-toggle="pill" href="#pills-nuke" role="tab" aria-controls="pills-nuke" aria-selected="false">Nuke</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-mirage-tab" data-toggle="pill" href="#pills-mirage" role="tab" aria-controls="pills-mirage" aria-selected="false">Mirage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-inferno-tab" data-toggle="pill" href="#pills-inferno" role="tab" aria-controls="pills-inferno" aria-selected="false">Inferno</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-cache-tab" data-toggle="pill" href="#pills-cache" role="tab" aria-controls="pills-cache" aria-selected="false">Cache </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-overpass-tab" data-toggle="pill" href="#pills-overpass" role="tab" aria-controls="pills-overpass" aria-selected="false">Overpass</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-dust2-tab" data-toggle="pill" href="#pills-dust2" role="tab" aria-controls="pills-dust2" aria-selected="false">Dust 2</a>
+            </li>
+        </ul>
+        <div class="tab-content py-3 px-3 px-sm-0" id="pills-tabContent2">
+
+            <div class="tab-pane fade show active" id="pills-train" role="tabpanel" aria-labelledby="pills-train-tab">
+                <div id = "history_train_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="trains:${train[0]}">
+                            <td th:utext="${trains.opponentName}">...</td>
+                            <td th:utext="${trains.score}" th:classappend="${trains.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(trains.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_train_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="trains:${train[1]}">
+                            <td th:utext="${trains.opponentName}">...</td>
+                            <td th:utext="${trains.score}" th:classappend="${trains.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(trains.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-nuke" role="tabpanel" aria-labelledby="pills-nuke-tab">
+                <div id = "history_nuke_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="nukes:${nuke[0]}">
+                            <td th:utext="${nukes.opponentName}">...</td>
+                            <td th:utext="${nukes.score}"  th:classappend="${nukes.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(nukes.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_nuke_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="nukes:${nuke[1]}">
+                            <td th:utext="${nukes.opponentName}">...</td>
+                            <td th:utext="${nukes.score}"  th:classappend="${nukes.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(nukes.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-mirage" role="tabpanel" aria-labelledby="pills-mirage-tab">
+                <div id = "history_mirage_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="mirages:${mirage[0]}">
+                            <td th:utext="${mirages.opponentName}">...</td>
+                            <td th:utext="${mirages.score}"  th:classappend="${mirages.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(mirages.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_mirage_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="mirages:${mirage[1]}">
+                            <td th:utext="${mirages.opponentName}">...</td>
+                            <td th:utext="${mirages.score}"  th:classappend="${mirages.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(mirages.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-inferno" role="tabpanel" aria-labelledby="pills-inferno-tab">
+                <div id = "history_inferno_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="infernos:${inferno[0]}">
+                            <td th:utext="${infernos.opponentName}">...</td>
+                            <td th:utext="${infernos.score}"  th:classappend="${infernos.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(infernos.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_inferno_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="infernos:${inferno[1]}">
+                            <td th:utext="${infernos.opponentName}">...</td>
+                            <td th:utext="${infernos.score}" th:classappend="${infernos.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(infernos.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-cache" role="tabpanel" aria-labelledby="pills-cache-tab">
+                <div id = "history_cache_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="caches:${cache[0]}">
+                            <td th:utext="${caches.opponentName}">...</td>
+                            <td th:utext="${caches.score}"  th:classappend="${caches.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(caches.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_cache_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="caches:${cache[1]}">
+                            <td th:utext="${caches.opponentName}">...</td>
+                            <td th:utext="${caches.score}"  th:classappend="${caches.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(caches.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-overpass" role="tabpanel" aria-labelledby="pills-overpass-tab">
+                <div id = "history_overpass_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="overpasss:${overpass[0]}">
+                            <td th:utext="${overpasss.opponentName}">...</td>
+                            <td th:utext="${overpasss.score}"  th:classappend="${overpasss.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(overpasss.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_overpass_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="overpasss:${overpass[1]}">
+                            <td th:utext="${overpasss.opponentName}">...</td>
+                            <td th:utext="${overpasss.score}"  th:classappend="${overpasss.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(overpasss.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-dust2" role="tabpanel" aria-labelledby="pills-dust2-tab">
+                <div id = "history_dust2_1" style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[0].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="dust2s:${dust2[0]}">
+                            <td th:utext="${dust2s.opponentName}">...</td>
+                            <td th:utext="${dust2s.score}"  th:classappend="${dust2s.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(dust2s.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id = "history_dust2_2"  style="align:left; display: inline-block">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th colspan="3" th:text="${picks[1].name}" style="text-align:center">TEAM NAME</th>
+                        </tr>
+                        <tr>
+                            <th>Opponent</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr th:each="dust2s2:${dust2[1]}">
+                            <td th:utext="${dust2s2.opponentName}">...</td>
+                            <td th:utext="${dust2s2.score}"  th:classappend="${dust2s2.winlose == 'won'} ? 'alert-success' : 'alert-danger'">...</td>
+                            <td th:utext="${#dates.format(dust2s2.gameDate, 'dd-MM-yyyy')}">...</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
     <div class="row" >
@@ -235,6 +585,24 @@
             <canvas id="bansChart"></canvas>
         </div>
     </div>
+
+
+    <table class="table table-sm table-bordered" id="upd">
+        <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+            <th>
+                Updated
+            </th>
+        </tr>
+        <tr th:each="updates:${bans}">
+            <td th:utext="${updates.name}">...</td>
+            <td th:utext="${#dates.format(updates.upd, 'dd-MM-yyyy')}">...</td>
+        </tr>
+        </thead>
+    </table>
 </div>
 
 <footer class="footer">
@@ -242,6 +610,20 @@
         <span class="text-muted">2018 © lactuk.gq</span>
     </div>
 </footer>
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var bansvar = [[${bans}]];
+    var picksvar = [[${picks}]];
+    /*]]>*/
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="/webjars/chart.js/2.7.2/dist/Chart.js"></script>
+<script src="/js/main.js"></script>
+
 
 </body>
 </html>

@@ -1,14 +1,10 @@
 package gq.pickban;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gq.pickban.model.Bans;
-import gq.pickban.model.Left;
-import gq.pickban.model.Picks;
-import gq.pickban.model.VisitStats;
-import gq.pickban.repository.BansRepository;
-import gq.pickban.repository.LeftRepository;
-import gq.pickban.repository.PicksRepository;
-import gq.pickban.repository.VisitStatsRepository;
+import gq.pickban.model.*;
+import gq.pickban.model.maps_results.*;
+import gq.pickban.repository.*;
+import gq.pickban.repository.maps_results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +25,23 @@ public class BansController {
     private PicksRepository picksRepository;
     @Autowired
     private LeftRepository leftRepository;
+    @Autowired
+    private CacheHistoryRepository cacheHistoryRepository;
+    @Autowired
+    private Dust2HistoryRepository dust2HistoryRepository;
+    @Autowired
+    private InfernoHistoryRepository infernoHistoryRepository;
+    @Autowired
+    private MirageHistoryRepository mirageHistoryRepository;
+    @Autowired
+    private NukeHistoryRepository nukeHistoryRepository;
+    @Autowired
+    private OverpassHistoryRepository overpassHistoryRepository;
+    @Autowired
+    private TrainHistoryRepository trainHistoryRepository;
+
+    @Autowired
+    private WinratesRepository winratesRepository;
 
     final VisitStatsRepository visitStatsRepository;
 
@@ -75,9 +88,68 @@ public class BansController {
         Left left2 = leftRepository.findById(id2);
         listOfLeft.add(left2);
 
+        List <List <CacheHistory>> listOfCacheH = new ArrayList<>();
+        List<CacheHistory> cache1 = cacheHistoryRepository.findByTeamId(id1);
+        listOfCacheH.add(cache1);
+        List<CacheHistory> cache2 = cacheHistoryRepository.findByTeamId(id2);
+        listOfCacheH.add(cache2);
+
+        List <List <Dust2History>> listOfDust2H = new ArrayList<>();
+        List<Dust2History> dust21 = dust2HistoryRepository.findByTeamId(id1);
+        listOfDust2H.add(dust21);
+        List<Dust2History> dust22 = dust2HistoryRepository.findByTeamId(id2);
+        listOfDust2H.add(dust22);
+
+        List <List <InfernoHistory>> listOfInfernoH = new ArrayList<>();
+        List<InfernoHistory> inferno1 = infernoHistoryRepository.findByTeamId(id1);
+        listOfInfernoH.add(inferno1);
+        List<InfernoHistory> inferno2 = infernoHistoryRepository.findByTeamId(id2);
+        listOfInfernoH.add(inferno2);
+
+        List <List <MirageHistory>> listOfMirageH = new ArrayList<>();
+        List<MirageHistory> mirage1 = mirageHistoryRepository.findByTeamId(id1);
+        listOfMirageH.add(mirage1);
+        List<MirageHistory> mirage2 = mirageHistoryRepository.findByTeamId(id2);
+        listOfMirageH.add(mirage2);
+
+        List <List <NukeHistory>> listOfNukeH = new ArrayList<>();
+        List<NukeHistory> nuke1 = nukeHistoryRepository.findByTeamId(id1);
+        listOfNukeH.add(nuke1);
+        List<NukeHistory> nuke2 = nukeHistoryRepository.findByTeamId(id2);
+        listOfNukeH.add(nuke2);
+
+        List <List <OverpassHistory>> listOfOverpassH = new ArrayList<>();
+        List<OverpassHistory> overpass1 = overpassHistoryRepository.findByTeamId(id1);
+        listOfOverpassH.add(overpass1);
+        List<OverpassHistory> overpass2 = overpassHistoryRepository.findByTeamId(id2);
+        listOfOverpassH.add(overpass2);
+
+        List <List <TrainHistory>> listOfTrainH = new ArrayList<>();
+        List<TrainHistory> train1 = trainHistoryRepository.findByTeamId(id1);
+        listOfTrainH.add(train1);
+        List<TrainHistory> train2 = trainHistoryRepository.findByTeamId(id2);
+        listOfTrainH.add(train2);
+
+
+        List <Winrates> listOfWinrates = new ArrayList<>();
+        Winrates winrates1 = winratesRepository.findByTeamId(id1);
+        listOfWinrates.add(winrates1);
+        Winrates winrates2 = winratesRepository.findByTeamId(id2);
+        listOfWinrates.add(winrates2);
+
+
+
         model.addAttribute("bans", listOfBans);
         model.addAttribute("picks", listOfPicks);
         model.addAttribute("lefts", listOfLeft);
+        model.addAttribute("cache", listOfCacheH);
+        model.addAttribute("dust2", listOfDust2H);
+        model.addAttribute("inferno", listOfInfernoH);
+        model.addAttribute("mirage", listOfMirageH);
+        model.addAttribute("nuke", listOfNukeH);
+        model.addAttribute("overpass", listOfOverpassH);
+        model.addAttribute("train", listOfTrainH);
+        model.addAttribute("winrates", listOfWinrates);
 
         String teamNames = ban1.getName() + " " + ban2.getName();
         saveStat(request, teamNames);
